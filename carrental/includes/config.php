@@ -1,18 +1,22 @@
 <?php
-define('DB_HOST', getenv("DB_HOST"));
-define('DB_USER', getenv("DB_USER"));
-define('DB_PASS', getenv("DB_PASS"));
-define('DB_NAME', getenv("DB_NAME"));
-define('DB_PORT', getenv("DB_PORT") ?: 3306);
+$host = getenv("DB_HOST");
+$db   = getenv("DB_NAME");
+$user = getenv("DB_USER");
+$pass = getenv("DB_PASS");
+$port = getenv("DB_PORT") ?: 3306;
+
+$dsn = "mysql:host=$host;port=$port;dbname=$db;charset=utf8mb4";
+
+$options = [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+
+    // 🔥 REQUIRED FOR CLEVER CLOUD
+    PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
+];
 
 try {
-    $dbh = new PDO(
-        "mysql:host=" . DB_HOST . ";port=" . DB_PORT . ";dbname=" . DB_NAME,
-        DB_USER,
-        DB_PASS,
-        array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'")
-    );
+    $conn = new PDO($dsn, $user, $pass, $options);
 } catch (PDOException $e) {
-    exit("DB Error: " . $e->getMessage());
+    die("DB Error: " . $e->getMessage());
 }
-?>
