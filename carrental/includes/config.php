@@ -11,7 +11,10 @@ try {
         DB_PASS,
         [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::MYSQL_ATTR_SSL_CA => true,   // ✅ REQUIRED BY CLEVER CLOUD
+
+            // ✅ CORRECT WAY FOR CLEVER CLOUD
+            PDO::MYSQL_ATTR_SSL_CA => null,
+            PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
         ]
     );
 } catch (PDOException $e) {
