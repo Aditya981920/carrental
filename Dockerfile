@@ -1,8 +1,14 @@
+# Example Dockerfile
 FROM php:8.1-apache
 
-RUN docker-php-ext-install pdo pdo_mysql
+# Copy all project files
+COPY . /var/www/html/
+
+# Set working directory
+WORKDIR /var/www/html/
+
+# Enable Apache mod_rewrite (needed for pretty URLs sometimes)
 RUN a2enmod rewrite
 
-COPY carrental/ /var/www/html/
-
-RUN chown -R www-data:www-data /var/www/html
+# Expose port
+EXPOSE 80

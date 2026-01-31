@@ -2,7 +2,7 @@
 define('DB_HOST', 'bdsn0q42sxbm1wlpmpae-mysql.services.clever-cloud.com');
 define('DB_NAME', 'bdsn0q42sxbm1wlpmpae');
 define('DB_USER', 'uswz2latdyj49um0');
-define('DB_PASS', 'uswz2latdyj49um0'); // 👈 paste exact password
+define('DB_PASS', '08pjRXsfMPmvZJTnyLTE'); // 👈 paste exact password
 
 try {
     $dbh = new PDO(
