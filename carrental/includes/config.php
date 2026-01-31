@@ -1,22 +1,19 @@
 <?php
-$host = getenv("DB_HOST");
-$db   = getenv("DB_NAME");
-$user = getenv("DB_USER");
-$pass = getenv("DB_PASS");
-$port = getenv("DB_PORT") ?: 3306;
-
-$dsn = "mysql:host=$host;port=$port;dbname=$db;charset=utf8mb4";
-
-$options = [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-
-    // 🔥 REQUIRED FOR CLEVER CLOUD
-    PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
-];
+define('DB_HOST', 'bdsn0q42sxbm1wlpmpae-mysql.services.clever-cloud.com');
+define('DB_NAME', 'bdsn0q42sxbm1wlpmpae');
+define('DB_USER', 'uswz2latdyj49um0');
+define('DB_PASS', 'uswz2latdyj49um0'); // 👈 paste exact password
 
 try {
-    $conn = new PDO($dsn, $user, $pass, $options);
+    $dbh = new PDO(
+        "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
+        DB_USER,
+        DB_PASS,
+        [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::MYSQL_ATTR_SSL_CA => true,   // ✅ REQUIRED BY CLEVER CLOUD
+        ]
+    );
 } catch (PDOException $e) {
-    die("DB Error: " . $e->getMessage());
+    die("DB Connection failed: " . $e->getMessage());
 }
